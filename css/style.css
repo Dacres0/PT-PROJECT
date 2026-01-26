@@ -255,3 +255,122 @@ body {
     width: 100%;
     height: 400px;
 }
+
+/* ============================================
+   About Page Specific
+   ============================================ */
+.about-section {
+    padding: 4rem 0;
+    background-color: #0a0a0a;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.about-content h2 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.about-content p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+    color: #cccccc;
+}
+
+.credentials {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+    border-radius: 10px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.credentials h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.credentials ul {
+    list-style-position: inside;
+}
+
+.credentials li {
+    margin-bottom: 0.5rem;
+    color: #cccccc;
+}
+
+.philosophy-section {
+    padding: 4rem 0;
+    background-color: #1a1a1a;
+}
+
+.philosophy-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffffff;
+}
+
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.philosophy-card {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.philosophy-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.philosophy-card p {
+    color: #cccccc;
+}
+
+.testimonials-section {
+    padding: 4rem 0;
+    background-color: #0a0a0a;
+}
+
+.testimonials-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #ffffff;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--accent-color);
+}
+
+.testimonial-card p {
+    font-style: italic;
+    margin-bottom: 1rem;
+    color: #cccccc;
+}
+
+.testimonial-author {
+    font-weight: 600;
+    color: #ffffff;
+}
+
