@@ -185,4 +185,25 @@ function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
 }
+
+function validatePhone(phone) {
+    const re = /^[\d\s\-\+\(\)]+$/;
+    return re.test(phone);
+}
+
+function validateCardNumber(number) {
+    const re = /^\d{13,19}$/;
+    return re.test(number.replace(/\s/g, ''));
+}
+
+function validateExpiry(expiry) {
+    const re = /^\d{2}\/\d{2}$/;
+    return re.test(expiry);
+}
+
+function validateCVC(cvc) {
+    const re = /^\d{3,4}$/;
+    return re.test(cvc);
+}
+
     
