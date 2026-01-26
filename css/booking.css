@@ -44,3 +44,418 @@
     transition: all 0.3s ease;
     border: 2px solid rgba(139, 92, 246, 0.3);
 }
+
+.step.active .step-number {
+    background: var(--gradient);
+    color: white;
+    border-color: transparent;
+}
+
+.step-text {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Booking Sections */
+.booking-section {
+    padding: 4rem 0;
+    background-color: #0a0a0a;
+}
+
+.booking-section.hidden {
+    display: none;
+}
+
+.booking-section h2 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 3rem;
+}
+
+/* Package Cards */
+.package-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.package-card {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 3px solid rgba(139, 92, 246, 0.2);
+    cursor: pointer;
+}
+
+.package-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-color);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(0, 212, 255, 0.15) 100%);
+}
+
+.package-card.popular {
+    border-color: var(--accent-color);
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(0, 212, 255, 0.15) 100%);
+}
+
+.popular-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gradient);
+    color: white;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.package-card h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.package-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin: 1rem 0;
+}
+
+.package-savings {
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.package-card > p {
+    color: #cccccc;
+    margin-bottom: 1.5rem;
+}
+
+.package-features {
+    list-style: none;
+    margin: 1.5rem 0;
+}
+
+.package-features li {
+    padding: 0.5rem 0;
+    padding-left: 25px;
+    position: relative;
+    color: #cccccc;
+}
+
+.package-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+.select-package-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.select-package-btn:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.02);
+}
+
+/* Selected Package Info */
+.selected-package-info {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--accent-color);
+    color: #ffffff;
+}
+
+/* Calendly Container */
+.calendly-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.calendly-note {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+/* Payment Section */
+.payment-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.payment-summary {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.payment-summary h3 {
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    color: #cccccc;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid rgba(139, 92, 246, 0.3);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+.payment-form {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(0, 212, 255, 0.05) 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.payment-form h3 {
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+.stripe-note {
+    background-color: #e7f3ff;
+    border-left: 4px solid #2196F3;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 5px;
+}
+
+.integration-steps {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.integration-steps li {
+    margin-bottom: 0.5rem;
+}
+
+.integration-steps a {
+    color: #2196F3;
+    text-decoration: none;
+}
+
+.integration-steps a:hover {
+    text-decoration: underline;
+}
+
+.demo-form {
+    margin-top: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.back-btn,
+.next-btn,
+.pay-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn {
+    background: rgba(139, 92, 246, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.back-btn:hover {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: var(--accent-color);
+}
+
+.next-btn,
+.pay-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.next-btn:hover,
+.pay-btn:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.payment-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    display: none;
+}
+
+.payment-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    display: block;
+}
+
+.payment-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    display: block;
+}
+
+/* Info Section */
+.info-section {
+    padding: 4rem 0;
+    background-color: #1a1a1a;
+}
+
+.info-section h2 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 3rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.info-item {
+    text-align: center;
+}
+
+.info-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 auto 1rem;
+}
+
+.info-item h4 {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.info-item p {
+    color: #cccccc;
+}
+
+/* Responsive Booking Page */
+@media (max-width: 768px) {
+    .steps-container {
+        gap: 1rem;
+    }
+
+    .step-text {
+        font-size: 0.9rem;
+    }
+
+    .payment-container {
+        grid-template-columns: 1fr;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .package-grid {
+        grid-template-columns: 1fr;
+    }
+}
