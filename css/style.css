@@ -1,1 +1,36 @@
+/* ============================================
+   Global Styles & Reset
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #8b5cf6;
+    --secondary-color: #0f0f0f;
+    --accent-color: #00d4ff;
+    --text-dark: #1a1a1a;
+    --text-light: #ffffff;
+    --success-color: #00d4ff;
+    --warning-color: #8b5cf6;
+    --gradient: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+    --gradient-reverse: linear-gradient(135deg, #8b5cf6 0%, #00d4ff 100%);
+    --shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+    --shadow-hover: 0 15px 40px rgba(139, 92, 246, 0.3);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: #0a0a0a;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
