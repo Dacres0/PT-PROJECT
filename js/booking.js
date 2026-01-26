@@ -150,4 +150,39 @@ document.addEventListener('DOMContentLoaded', function() {
 // ============================================
 // Calendly Integration Helper
 // ============================================
+
+// Calendly will automatically initialize if you have the correct data-url
+// You can listen to Calendly events like this:
+
+function isCalendlyEvent(e) {
+    return e.data.event && e.data.event.indexOf('calendly') === 0;
+}
+
+window.addEventListener('message', function(e) {
+    if (isCalendlyEvent(e)) {
+        // Calendly event detected
+        if (e.data.event === 'calendly.event_scheduled') {
+            console.log('Event scheduled:', e.data);
+            
+            // Show a success message or move to next step
+            const selectedInfo = document.getElementById('selectedPackageInfo');
+            if (selectedInfo) {
+                selectedInfo.innerHTML += `
+                    <div style="margin-top: 1rem; padding: 1rem; background-color: #d4edda; color: #155724; border-radius: 5px;">
+                        <strong>✓ Session Scheduled!</strong> Please proceed to payment.
+                    </div>
+                `;
+            }
+        }
+    }
+});
+
+// ============================================
+// Form Validation Helpers
+// ============================================
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
     
