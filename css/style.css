@@ -210,3 +210,23 @@ body {
     color: #cccccc;
 }
 
+/* ============================================
+   CTA Section
+   ============================================ */
+.cta-section {
+    background: var(--gradient);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
