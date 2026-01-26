@@ -103,3 +103,42 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ============================================
+// Contact Form Handling
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.getElementById('contactForm');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Here you would typically send the data to a server
+            console.log('Form submitted:', formData);
+            
+            // Show success message
+            const formMessage = document.getElementById('formMessage');
+            formMessage.textContent = 'Thank you for your message! We will get back to you soon.';
+            formMessage.className = 'form-message success';
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                formMessage.className = 'form-message';
+                formMessage.textContent = '';
+            }, 5000);
+        });
+    }
+});
