@@ -166,3 +166,47 @@ body {
     padding: 15px 40px;
     font-size: 1.1rem;
 }
+
+/* ============================================
+   Info Cards & Grid Layouts
+   ============================================ */
+.quick-info {
+    padding: 4rem 0;
+    background-color: #1a1a1a;
+}
+
+.quick-info .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.info-card {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.info-card .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.info-card h3 {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.info-card p {
+    color: #cccccc;
+}
+
