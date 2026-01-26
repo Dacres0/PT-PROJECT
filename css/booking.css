@@ -1,1 +1,46 @@
+/* ============================================
+   Booking Page Specific Styles
+   ============================================ */
 
+/* Booking Steps */
+.booking-steps {
+    padding: 2rem 0;
+    background-color: #1a1a1a;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.step.active {
+    opacity: 1;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(139, 92, 246, 0.2);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(139, 92, 246, 0.3);
+}
