@@ -1,292 +1,236 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Your Session - PT PARKES</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/booking.css">
-    <!-- Calendly Widget Styles -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <!-- Stripe JS -->
-    <script src="https://js.stripe.com/v3/"></script>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <h1>PT PARKES</h1>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="booking.html" class="active">Book Now</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+// ============================================
+// Booking Page - Multi-Step Form
+// ============================================
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1>Book Your Session</h1>
-            <p>Choose your service and schedule your appointment</p>
-        </div>
-    </section>
+let selectedPackage = {
+    name: '',
+    price: 0
+};
 
-    <!-- Booking Steps -->
-    <section class="booking-steps">
-        <div class="container">
-            <div class="steps-container">
-                <div class="step active" id="step1-indicator">
-                    <div class="step-number">1</div>
-                    <div class="step-text">Select Service</div>
-                </div>
-                <div class="step" id="step2-indicator">
-                    <div class="step-number">2</div>
-                    <div class="step-text">Schedule Time</div>
-                </div>
-                <div class="step" id="step3-indicator">
-                    <div class="step-number">3</div>
-                    <div class="step-text">Payment</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Step 1: Service Selection -->
-    <section class="booking-section" id="step1">
-        <div class="container">
-            <h2>Select Your Training Package</h2>
-            <div class="package-grid">
-                <div class="package-card" data-package="single-session" data-price="60">
-                    <h3>Single Session</h3>
-                    <div class="package-price">£60</div>
-                    <p>One-on-one personal training session</p>
-                    <ul class="package-features">
-                        <li>60 minutes of training</li>
-                        <li>Personalized workout plan</li>
-                        <li>Form correction & guidance</li>
-                        <li>Progress tracking</li>
-                        <li>Workout tracking app</li>
-                    </ul>
-                    <button class="select-package-btn">Select Package</button>
-                </div>
-
-                <div class="package-card popular" data-package="4-pack" data-price="220">
-                    <div class="popular-badge">Best Value</div>
-                    <h3>4-Session Pack</h3>
-                    <div class="package-price">£220</div>
-                    <div class="package-savings">1 session per week</div>
-                    <p>Four one-on-one training sessions for a month</p>
-                    <ul class="package-features">
-                        <li>5 x 60-minute sessions</li>
-                        <li>Custom training program</li>
-                        <li>Nutrition guidance included</li>
-                        <li>Phone support</li>
-                        <li>Workout tracking app</li>
-                    </ul>
-                    <button class="select-package-btn">Select Package</button>
-                </div>
-
-                <div class="package-card" data-package="8-pack" data-price="380">
-                    <h3>8-Session Pack</h3>
-                    <div class="package-price">£380</div>
-                    <div class="package-savings">2 sessions per week</div>
-                    <p>Eight one-on-one training sessions</p>
-                    <ul class="package-features">
-                        <li>10 x 60-minute sessions</li>
-                        <li>Comprehensive program design</li>
-                        <li>Meal planning assistance</li>
-                        <li>Priority scheduling</li>
-                        <li>Workout tracking app</li>
-                    </ul>
-                    <button class="select-package-btn">Select Package</button>
-                </div>
-
-                <div class="package-card" data-package="12-pack" data-price="540">
-                    <h3>12-Session Pack</h3>
-                    <div class="package-price">£540</div>
-                    <div class="package-savings">3 sessions per week</div>
-                    <p>Twelve one-on-one training sessions</p>
-                    <ul class="package-features">
-                        <li>12 x 60-minute sessions</li>
-                        <li>Individual personal training</li>
-                        <li>Advanced program design</li>
-                        <li>Full nutritional support</li>
-                        <li>Workout tracking app</li>
-                    </ul>
-                    <button class="select-package-btn">Select Package</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Step 2: Calendly Scheduling -->
-    <section class="booking-section hidden" id="step2">
-        <div class="container">
-            <h2>Schedule Your Appointment</h2>
-            <div class="selected-package-info" id="selectedPackageInfo"></div>
-            
-            <!-- Calendly inline widget -->
-            <div class="calendly-container">
-                <div class="calendly-inline-widget" 
-                     data-url="https://calendly.com/danielacres-dev/30min"
-                     style="min-width:320px;height:700px;">
-                </div>
-            </div>
-            
-            <div class="button-group">
-                <button class="back-btn" onclick="goToStep(1)">Back to Packages</button>
-                <button class="next-btn" onclick="goToStep(3)">Proceed to Payment</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Step 3: Payment with Stripe -->
-    <section class="booking-section hidden" id="step3">
-        <div class="container">
-            <h2>Complete Your Payment</h2>
-            <div class="payment-container">
-                <div class="payment-summary">
-                    <h3>Order Summary</h3>
-                    <div class="summary-item">
-                        <span>Package:</span>
-                        <span id="summaryPackage">5-Session Pack</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Amount:</span>
-                        <span id="summaryAmount">$356.25</span>
-                    </div>
-                    <div class="summary-total">
-                        <span>Total:</span>
-                        <span id="summaryTotal">$356.25</span>
-                    </div>
-                </div>
-
-                <div class="payment-form">
-                    <h3>Payment Details</h3>
-                    
-                    <!-- Stripe Payment Element will be inserted here -->
-                    <div id="payment-element">
-                        <!-- Stripe.js injects the Payment Element here -->
-                    </div>
-                    
-                    <!-- Demo Payment Form (Replace with actual Stripe integration) -->
-                    <div class="demo-payment-form">
-                        <p class="stripe-note">
-                            <strong>Stripe Integration Required:</strong><br>
-                            To complete this integration, you need to:
-                        </p>
-                        <ol class="integration-steps">
-                            <li>Create a Stripe account at <a href="https://stripe.com" target="_blank">stripe.com</a></li>
-                            <li>Get your API keys from the Stripe dashboard</li>
-                            <li>Set up a server-side endpoint to create payment intents</li>
-                            <li>Add your publishable key to the Stripe initialization</li>
-                        </ol>
-                        
-                        <div class="demo-form">
-                            <div class="form-group">
-                                <label for="cardName">Cardholder Name</label>
-                                <input type="text" id="cardName" placeholder="John Doe">
-                            </div>
-                            <div class="form-group">
-                                <label for="cardNumber">Card Number</label>
-                                <input type="text" id="cardNumber" placeholder="4242 4242 4242 4242">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="expiry">Expiry Date</label>
-                                    <input type="text" id="expiry" placeholder="MM/YY">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cvc">CVC</label>
-                                    <input type="text" id="cvc" placeholder="123">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="back-btn" onclick="goToStep(2)">Back to Schedule</button>
-                        <button class="pay-btn" id="payButton">Complete Payment</button>
-                    </div>
-                    
-                    <div id="payment-message" class="payment-message"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Info Section -->
-    <section class="info-section">
-        <div class="container">
-            <h2>What to Expect</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-icon">✓</div>
-                    <h4>Confirmation Email</h4>
-                    <p>You'll receive a confirmation email with all session details immediately after booking.</p>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">✓</div>
-                    <h4>What to Bring</h4>
-                    <p>Comfortable workout clothes, water bottle, and a positive attitude!</p>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">✓</div>
-                    <h4>Cancellation Policy</h4>
-                    <p>Free cancellation up to 24 hours before your scheduled session.</p>
-                </div>
-                <div class="info-item">
-                    <div class="info-icon">✓</div>
-                    <h4>Questions?</h4>
-                    <p>Contact us anytime at info@ptparks.com or call 07881634160</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>PT PARKES</h3>
-                    <p>Transforming lives through fitness</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="booking.html">Book Now</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>Email: info@ptparks.com</p>
-                    <p>Phone: 07881634160</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 PT PARKES. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Calendly Widget Script -->
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+// Step Navigation
+function goToStep(stepNumber) {
+    // Hide all steps
+    document.querySelectorAll('.booking-section').forEach(section => {
+        section.classList.add('hidden');
+    });
     
-    <script src="../js/main.js"></script>
-    <script src="../js/booking.js"></script>
-</body>
-</html>
+    // Show selected step
+    document.getElementById(`step${stepNumber}`).classList.remove('hidden');
+    
+    // Update step indicators
+    document.querySelectorAll('.step').forEach((step, index) => {
+        if (index < stepNumber) {
+            step.classList.add('active');
+        } else {
+            step.classList.remove('active');
+        }
+    });
+}
+
+// Package Selection
+document.addEventListener('DOMContentLoaded', function() {
+    const packageCards = document.querySelectorAll('.package-card');
+    
+    packageCards.forEach(card => {
+        const selectBtn = card.querySelector('.select-package-btn');
+        
+        if (selectBtn) {
+            selectBtn.addEventListener('click', function() {
+                const packageName = card.dataset.package;
+                const packagePrice = card.dataset.price;
+                const packageTitle = card.querySelector('h3').textContent;
+                
+                // Store selected package
+                selectedPackage = {
+                    name: packageName,
+                    title: packageTitle,
+                    price: parseFloat(packagePrice)
+                };
+                
+                // Update selected package info
+                updateSelectedPackageInfo();
+                
+                // Update payment summary
+                updatePaymentSummary();
+                
+                // Move to step 2
+                goToStep(2);
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    });
+    
+    // Initialize first step
+    goToStep(1);
+});
+
+// Update Selected Package Info
+function updateSelectedPackageInfo() {
+    const infoDiv = document.getElementById('selectedPackageInfo');
+    if (infoDiv) {
+        infoDiv.innerHTML = `
+            <h3>Selected Package</h3>
+            <p><strong>${selectedPackage.title}</strong> - $${selectedPackage.price.toFixed(2)}</p>
+        `;
+    }
+}
+
+// Update Payment Summary
+function updatePaymentSummary() {
+    const summaryPackage = document.getElementById('summaryPackage');
+    const summaryAmount = document.getElementById('summaryAmount');
+    const summaryTotal = document.getElementById('summaryTotal');
+    
+    if (summaryPackage && summaryAmount && summaryTotal) {
+        summaryPackage.textContent = selectedPackage.title;
+        summaryAmount.textContent = `$${selectedPackage.price.toFixed(2)}`;
+        summaryTotal.textContent = `$${selectedPackage.price.toFixed(2)}`;
+    }
+}
+
+// ============================================
+// Stripe Payment Integration (Demo)
+// ============================================
+
+// Initialize Stripe (you need to add your publishable key)
+// const stripe = Stripe('your_publishable_key_here');
+
+document.addEventListener('DOMContentLoaded', function() {
+    const payButton = document.getElementById('payButton');
+    
+    if (payButton) {
+        payButton.addEventListener('click', async function() {
+            const paymentMessage = document.getElementById('payment-message');
+            
+            // Validate form fields (demo validation)
+            const cardName = document.getElementById('cardName')?.value;
+            const cardNumber = document.getElementById('cardNumber')?.value;
+            const expiry = document.getElementById('expiry')?.value;
+            const cvc = document.getElementById('cvc')?.value;
+            
+            if (!cardName || !cardNumber || !expiry || !cvc) {
+                paymentMessage.textContent = 'Please fill in all payment details.';
+                paymentMessage.className = 'payment-message error';
+                return;
+            }
+            
+            // Show processing state
+            payButton.disabled = true;
+            payButton.textContent = 'Processing...';
+            
+            // Simulate payment processing (2 seconds)
+            setTimeout(() => {
+                // This is where you would normally process the payment with Stripe
+                // For demo purposes, we'll just show a success message
+                
+                paymentMessage.innerHTML = `
+                    <strong>✓ Payment Successful!</strong><br>
+                    Your booking has been confirmed. You will receive a confirmation email shortly.
+                    <br><br>
+                    <strong>Note:</strong> This is a demo. To process real payments, integrate with Stripe API:
+                    <br>1. Add your Stripe publishable key
+                    <br>2. Create a server endpoint to handle payment intents
+                    <br>3. Use Stripe Elements for secure card input
+                `;
+                paymentMessage.className = 'payment-message success';
+                
+                payButton.textContent = 'Payment Complete';
+                
+                // Redirect to home page after 5 seconds
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 5000);
+            }, 2000);
+        });
+    }
+});
+
+// ============================================
+// Calendly Integration Helper
+// ============================================
+
+// Calendly will automatically initialize if you have the correct data-url
+// You can listen to Calendly events like this:
+
+function isCalendlyEvent(e) {
+    return e.data.event && e.data.event.indexOf('calendly') === 0;
+}
+
+window.addEventListener('message', function(e) {
+    if (isCalendlyEvent(e)) {
+        // Calendly event detected
+        if (e.data.event === 'calendly.event_scheduled') {
+            console.log('Event scheduled:', e.data);
+            
+            // Show a success message or move to next step
+            const selectedInfo = document.getElementById('selectedPackageInfo');
+            if (selectedInfo) {
+                selectedInfo.innerHTML += `
+                    <div style="margin-top: 1rem; padding: 1rem; background-color: #d4edda; color: #155724; border-radius: 5px;">
+                        <strong>✓ Session Scheduled!</strong> Please proceed to payment.
+                    </div>
+                `;
+            }
+        }
+    }
+});
+
+// ============================================
+// Form Validation Helpers
+// ============================================
+
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+function validatePhone(phone) {
+    const re = /^[\d\s\-\+\(\)]+$/;
+    return re.test(phone);
+}
+
+function validateCardNumber(number) {
+    const re = /^\d{13,19}$/;
+    return re.test(number.replace(/\s/g, ''));
+}
+
+function validateExpiry(expiry) {
+    const re = /^\d{2}\/\d{2}$/;
+    return re.test(expiry);
+}
+
+function validateCVC(cvc) {
+    const re = /^\d{3,4}$/;
+    return re.test(cvc);
+}
+
+// ============================================
+// Auto-format Card Number Input
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const cardNumberInput = document.getElementById('cardNumber');
+    
+    if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+    }
+    
+    // Auto-format expiry date
+    const expiryInput = document.getElementById('expiry');
+    
+    if (expiryInput) {
+        expiryInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+            e.target.value = value;
+        });
+    }
+});
