@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-
+    
     // Initialize first step
     goToStep(1);
 });
