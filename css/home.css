@@ -52,6 +52,15 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
+.slide-content .carousel-image {
+    flex: 1;
+    height: 450px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
 .slide-text {
     flex: 1;
     padding: 2rem;
@@ -137,7 +146,7 @@
         height: 500px;
     }
 
-   .slide-content {
+    .slide-content {
         flex-direction: column;
         text-align: center;
         justify-content: center;
