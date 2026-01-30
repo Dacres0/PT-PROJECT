@@ -296,6 +296,77 @@ body {
     color: #cccccc;
 }
 
+.trainer-intro {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(0, 212, 255, 0.08) 100%);
+    border-radius: 12px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.inspirational-quote {
+    text-align: center;
+    margin: 2.5rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+    border-radius: 15px;
+    position: relative;
+}
+
+.inspirational-quote blockquote {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: #ffffff;
+    margin: 0;
+    position: relative;
+    font-weight: 300;
+}
+
+.inspirational-quote blockquote::before {
+    content: '"';
+    font-size: 4rem;
+    color: var(--accent-color);
+    position: absolute;
+    top: -20px;
+    left: -30px;
+    font-family: Georgia, serif;
+}
+
+.inspirational-quote blockquote::after {
+    content: '"';
+    font-size: 4rem;
+    color: var(--accent-color);
+    position: absolute;
+    bottom: -50px;
+    right: -30px;
+    font-family: Georgia, serif;
+}
+
+.specialist-areas {
+    margin: 2rem 0;
+}
+
+.specialist-areas h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.specialist-areas ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+}
+
+.specialist-areas li {
+    padding: 0.5rem 1rem;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 8px;
+    color: #cccccc;
+    text-align: center;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
 .credentials {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -744,6 +815,25 @@ body {
 
     .about-grid,
     .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trainer-intro {
+        margin: 1.5rem 0;
+        padding: 1rem;
+    }
+
+    .inspirational-quote {
+        margin: 2rem 0;
+        padding: 1.5rem;
+    }
+
+    .inspirational-quote blockquote::before,
+    .inspirational-quote blockquote::after {
+        display: none;
+    }
+
+    .specialist-areas ul {
         grid-template-columns: 1fr;
     }
 
