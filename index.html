@@ -1,1 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT PARKES - Personal Training Excellence</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>PT PARKES</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="pages/about.html">About</a></li>
+                <li><a href="pages/services.html">Services</a></li>
+                <li><a href="pages/booking.html">Book Now</a></li>
+                <li><a href="pages/contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <section class="carousel-section">
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <div class="slide-content">
+                    <img src="images/man-with-sportive-body-good-shape-looking-away-pondering-while-standing_2221-9439.avif" alt="Professional personal training" class="carousel-image">
+                    <div class="slide-text">
+                        <h2>Transform Your Body</h2>
+                        <p>Professional personal training tailored to your goals</p>
+                        <a href="pages/booking.html" class="cta-button">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="slide-content">
+                    <div class="placeholder-image">
+                        <span>Image 2</span>
+                    </div>
+                    <div class="slide-text">
+                        <h2>Build Strength & Confidence</h2>
+                        <p>Expert guidance every step of the way</p>
+                        <a href="pages/services.html" class="cta-button">View Services</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-slide">
+                <div class="slide-content">
+                    <div class="placeholder-image">
+                        <span>Image 3</span>
+                    </div>
+                    <div class="slide-text">
+                        <h2>Achieve Your Fitness Goals</h2>
+                        <p>Personalized programs designed for success</p>
+                        <a href="pages/about.html" class="cta-button">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Controls -->
+            <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
+            
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <span class="indicator active" onclick="currentSlide(0)"></span>
+                <span class="indicator" onclick="currentSlide(1)"></span>
+                <span class="indicator" onclick="currentSlide(2)"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Info Section -->
+    <section class="quick-info">
+        <div class="container">
+            <div class="info-card">
+                <div class="icon">💪</div>
+                <h3>Expert Training</h3>
+                <p>Certified professional with years of experience</p>
+            </div>
+            <div class="info-card">
+                <div class="icon">🎯</div>
+                <h3>Custom Programs</h3>
+                <p>Tailored workouts to match your specific goals</p>
+            </div>
+            <div class="info-card">
+                <div class="icon">📊</div>
+                <h3>Track Progress</h3>
+                <p>Monitor your improvements and celebrate milestones</p>
+            </div>
+            <div class="info-card">
+                <div class="icon">🏆</div>
+                <h3>Proven Results</h3>
+                <p>Join hundreds of satisfied clients</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Start Your Fitness Journey?</h2>
+            <p>Book your first session today and take the first step towards a healthier you</p>
+            <a href="pages/booking.html" class="cta-button-large">Book Your Session</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PT PARKES</h3>
+                    <p>Transforming lives through fitness</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="pages/about.html">About</a></li>
+                        <li><a href="pages/services.html">Services</a></li>
+                        <li><a href="pages/booking.html">Book Now</a></li>
+                        <li><a href="pages/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@ptparks.com</p>
+                    <p>Phone: 07881634160</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 PT PARKES. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
 
