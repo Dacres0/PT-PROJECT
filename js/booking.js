@@ -25,6 +25,14 @@ function goToStep(stepNumber) {
             step.classList.remove('active');
         }
     });
+    
+    // Initialize Stripe Elements when payment step is shown
+    if (stepNumber === 3) {
+        console.log('Step 3 shown, initializing Stripe Elements...');
+        setTimeout(() => {
+            initializeStripeElements();
+        }, 100); // Small delay to ensure DOM is ready
+    }
 }
 
 // Package Selection
@@ -91,58 +99,122 @@ function updatePaymentSummary() {
 }
 
 // ============================================
-// Stripe Payment Integration (Demo)
+// Stripe Payment Integration
 // ============================================
 
-// Initialize Stripe (you need to add your publishable key)
-// const stripe = Stripe('your_publishable_key_here');
+// Initialize Stripe with your publishable key
+let stripe, elements;
+
+function initializeStripe() {
+    if (typeof Stripe === 'undefined') {
+        console.error('Stripe.js not loaded');
+        return false;
+    }
+    
+    if (!stripe) {
+        stripe = Stripe('pk_test_51SvEz32fcEfe23Qiz4yDdvTfuHhNZm4Q8EBrR7Xnn98LDuntj3XS9zqC4oN4gZ1YSrekvt1PnNk4ZiaODQeS1n7100UeD3FkhB');
+        elements = stripe.elements();
+    }
+    return true;
+}
+
+// Initialize Stripe Elements
+function initializeStripeElements() {
+    // Ensure Stripe is initialized
+    if (!initializeStripe()) {
+        console.error('Cannot initialize Stripe Elements - Stripe.js not available');
+        return;
+    }
+    
+    const paymentElement = document.getElementById('payment-element');
+    if (!paymentElement) {
+        console.error('Payment element not found');
+        return;
+    }
+    
+    // Check if already initialized
+    if (window.paymentElement) {
+        return; // Already initialized
+    }
+    
+    try {
+        // Create and mount the Card Element
+        const cardElement = elements.create('card');
+        cardElement.mount('#payment-element');
+        
+        // Store reference for later use
+        window.paymentElement = cardElement;
+        
+        console.log('Stripe Elements initialized successfully');
+    } catch (error) {
+        console.error('Failed to initialize Stripe Elements:', error);
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if step 3 is currently visible (in case of page refresh)
+    const step3 = document.getElementById('step3');
+    if (step3 && !step3.classList.contains('hidden')) {
+        setTimeout(() => {
+            initializeStripeElements();
+        }, 100);
+    }
+    
     const payButton = document.getElementById('payButton');
     
     if (payButton) {
         payButton.addEventListener('click', async function() {
             const paymentMessage = document.getElementById('payment-message');
             
-            // Validate form fields (demo validation)
-            const cardName = document.getElementById('cardName')?.value;
-            const cardNumber = document.getElementById('cardNumber')?.value;
-            const expiry = document.getElementById('expiry')?.value;
-            const cvc = document.getElementById('cvc')?.value;
-            
-            if (!cardName || !cardNumber || !expiry || !cvc) {
-                paymentMessage.textContent = 'Please fill in all payment details.';
-                paymentMessage.className = 'payment-message error';
-                return;
+            // Check if Stripe Elements is initialized, if not, try to initialize
+            if (!window.paymentElement) {
+                if (!initializeStripe()) {
+                    paymentMessage.textContent = 'Stripe.js not loaded. Please check your internet connection.';
+                    paymentMessage.className = 'payment-message error';
+                    return;
+                }
+                
+                initializeStripeElements();
+                
+                // Wait a bit for initialization
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                if (!window.paymentElement) {
+                    paymentMessage.textContent = 'Payment system failed to initialize. Please refresh the page.';
+                    paymentMessage.className = 'payment-message error';
+                    return;
+                }
             }
             
             // Show processing state
             payButton.disabled = true;
             payButton.textContent = 'Processing...';
             
-            // Simulate payment processing (2 seconds)
-            setTimeout(() => {
-                // This is where you would normally process the payment with Stripe
-                // For demo purposes, we'll just show a success message
+            try {
+                // In a real implementation, you would create a payment intent on your server
+                // For demo purposes, we'll simulate the process
                 
                 paymentMessage.innerHTML = `
-                    <strong>✓ Payment Successful!</strong><br>
-                    Your booking has been confirmed. You will receive a confirmation email shortly.
-                    <br><br>
-                    <strong>Note:</strong> This is a demo. To process real payments, integrate with Stripe API:
-                    <br>1. Add your Stripe publishable key
-                    <br>2. Create a server endpoint to handle payment intents
-                    <br>3. Use Stripe Elements for secure card input
+                    <strong>✓ Stripe Integration Active!</strong><br>
+                    Your Stripe key has been successfully added.<br><br>
+                    <strong>Next Steps for Full Integration:</strong><br>
+                    1. Set up a server-side endpoint to create payment intents<br>
+                    2. Handle the payment confirmation on the server<br>
+                    3. Process the payment securely<br><br>
+                    For testing, you can use Stripe's test card numbers:<br>
+                    • 4242 4242 4242 4242 (success)<br>
+                    • 4000 0000 0000 0002 (decline)
                 `;
                 paymentMessage.className = 'payment-message success';
                 
-                payButton.textContent = 'Payment Complete';
+                payButton.textContent = 'Integration Complete';
                 
-                // Redirect to home page after 5 seconds
-                setTimeout(() => {
-                    window.location.href = '../index.html';
-                }, 5000);
-            }, 2000);
+            } catch (error) {
+                paymentMessage.textContent = `Payment failed: ${error.message}`;
+                paymentMessage.className = 'payment-message error';
+                payButton.disabled = false;
+                payButton.textContent = 'Complete Payment';
+            }
         });
     }
 });
