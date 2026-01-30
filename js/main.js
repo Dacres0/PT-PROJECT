@@ -83,7 +83,7 @@ function currentSlide(index) {
 function startAutoSlide() {
     autoSlideInterval = setInterval(() => {
         showSlide(currentSlideIndex + 1);
-    }, 5000); // Change slide every 5 seconds
+    }, 6000); // Change slide every 6 seconds
 }
 
 // Initialize carousel if it exists on the page
@@ -172,4 +172,3 @@ window.addEventListener('scroll', function() {
         navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
     }
 });
-
