@@ -138,7 +138,7 @@
             <!-- Calendly inline widget -->
             <div class="calendly-container">
                 <div class="calendly-inline-widget" 
-                     data-url="https://calendly.com/danielacres-dev/30min"
+                     data-url="https://calendly.com/parkesjack007/30min"
                      style="min-width:320px;height:700px;">
                 </div>
             </div>
@@ -174,44 +174,15 @@
                 <div class="payment-form">
                     <h3>Payment Details</h3>
                     
-                    <!-- Stripe Payment Element will be inserted here -->
+                    <!-- Stripe Card Element -->
                     <div id="payment-element">
-                        <!-- Stripe.js injects the Payment Element here -->
+                        <!-- Stripe.js injects the Card Element here -->
                     </div>
                     
-                    <!-- Demo Payment Form (Replace with actual Stripe integration) -->
-                    <div class="demo-payment-form">
-                        <p class="stripe-note">
-                            <strong>Stripe Integration Required:</strong><br>
-                            To complete this integration, you need to:
-                        </p>
-                        <ol class="integration-steps">
-                            <li>Create a Stripe account at <a href="https://stripe.com" target="_blank">stripe.com</a></li>
-                            <li>Get your API keys from the Stripe dashboard</li>
-                            <li>Set up a server-side endpoint to create payment intents</li>
-                            <li>Add your publishable key to the Stripe initialization</li>
-                        </ol>
-                        
-                        <div class="demo-form">
-                            <div class="form-group">
-                                <label for="cardName">Cardholder Name</label>
-                                <input type="text" id="cardName" placeholder="John Doe">
-                            </div>
-                            <div class="form-group">
-                                <label for="cardNumber">Card Number</label>
-                                <input type="text" id="cardNumber" placeholder="4242 4242 4242 4242">
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="expiry">Expiry Date</label>
-                                    <input type="text" id="expiry" placeholder="MM/YY">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cvc">CVC</label>
-                                    <input type="text" id="cvc" placeholder="123">
-                                </div>
-                            </div>
-                        </div>
+                    <div class="stripe-info">
+                        <p><strong>Secure Payment Powered by Stripe</strong></p>
+                        <p>Your payment information is encrypted and secure.</p>
+                        <p>For testing, use card number: <code>4242 4242 4242 4242</code></p>
                     </div>
 
                     <div class="button-group">
@@ -290,4 +261,3 @@
     <script src="../js/booking.js"></script>
 </body>
 </html>
-
