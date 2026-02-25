@@ -258,6 +258,7 @@ body {
 
 .about-trainer-image {
     width: 100%;
+    max-width: 350px;
     height: 500px;
     object-fit: cover;
     border-radius: 15px;
@@ -281,13 +282,33 @@ body {
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
+    gap: 4rem;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-image {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 1rem;
+    max-height: 400px;
 }
 
 .about-content h2 {
     color: #ffffff;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.trainer-greeting {
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    font-style: italic;
 }
 
 .about-content p {
@@ -297,96 +318,89 @@ body {
 }
 
 .trainer-intro {
-    margin: 2rem 0;
-    padding: 1.5rem;
+    margin: 2.5rem 0;
+    padding: 2rem;
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(0, 212, 255, 0.08) 100%);
-    border-radius: 12px;
+    border-radius: 15px;
     border-left: 4px solid var(--accent-color);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
+}
+
+.trainer-intro p {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.7;
 }
 
 .inspirational-quote {
     text-align: center;
-    margin: 2.5rem 0;
-    padding: 2rem;
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-    border-radius: 15px;
+    margin: 3rem 0;
+    padding: 2.5rem;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(0, 212, 255, 0.12) 100%);
+    border-radius: 20px;
     position: relative;
+    box-shadow: 0 15px 40px rgba(139, 92, 246, 0.15);
 }
 
 .inspirational-quote blockquote {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-style: italic;
     color: #ffffff;
     margin: 0;
     position: relative;
     font-weight: 300;
+    line-height: 1.4;
 }
 
 .inspirational-quote blockquote::before {
     content: '"';
-    font-size: 4rem;
+    font-size: 5rem;
     color: var(--accent-color);
     position: absolute;
-    top: -20px;
-    left: -30px;
+    top: -30px;
+    left: -40px;
     font-family: Georgia, serif;
+    opacity: 0.6;
 }
 
 .inspirational-quote blockquote::after {
     content: '"';
-    font-size: 4rem;
+    font-size: 5rem;
     color: var(--accent-color);
     position: absolute;
-    bottom: -50px;
-    right: -30px;
+    bottom: -60px;
+    right: -40px;
     font-family: Georgia, serif;
-}
-
-.specialist-areas {
-    margin: 2rem 0;
-}
-
-.specialist-areas h3 {
-    color: var(--accent-color);
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-}
-
-.specialist-areas ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.5rem;
-}
-
-.specialist-areas li {
-    padding: 0.5rem 1rem;
-    background: rgba(0, 212, 255, 0.1);
-    border-radius: 8px;
-    color: #cccccc;
-    text-align: center;
-    border: 1px solid rgba(0, 212, 255, 0.2);
+    opacity: 0.6;
 }
 
 .credentials {
-    margin-top: 2rem;
-    padding: 1.5rem;
+    margin-top: 3rem;
+    padding: 2rem;
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-    border-radius: 10px;
+    border-radius: 15px;
     border: 1px solid rgba(139, 92, 246, 0.3);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
 }
 
 .credentials h3 {
     color: var(--accent-color);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
 }
 
 .credentials ul {
     list-style-position: inside;
+    padding: 0;
 }
 
 .credentials li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
     color: #cccccc;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent-color);
 }
 
 .philosophy-section {
@@ -813,19 +827,23 @@ body {
         display: flex;
     }
 
-    .about-grid,
-    .contact-grid {
+    .about-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .about-image {
+        order: -1;
     }
 
     .trainer-intro {
-        margin: 1.5rem 0;
-        padding: 1rem;
+        margin: 2rem 0;
+        padding: 1.5rem;
     }
 
     .inspirational-quote {
-        margin: 2rem 0;
-        padding: 1.5rem;
+        margin: 2.5rem 0;
+        padding: 2rem;
     }
 
     .inspirational-quote blockquote::before,
@@ -833,8 +851,9 @@ body {
         display: none;
     }
 
-    .specialist-areas ul {
-        grid-template-columns: 1fr;
+    .credentials {
+        margin-top: 2rem;
+        padding: 1.5rem;
     }
 
     .page-header h1 {
@@ -855,4 +874,61 @@ body {
         padding: 12px 30px;
         font-size: 1rem;
     }
+}
+
+/* Calorie Calculator Page Styles */
+#calorie-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+#calorie-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+#calorie-form input, #calorie-form select, #calorie-form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#calorie-form button {
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#calorie-form button:hover {
+    background-color: #0056b3;
+}
+
+#results {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+#results h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    text-align: center;
+}
+
+#results p {
+    margin: 10px 0;
+    font-size: 16px;
+    text-align: center;
 }
