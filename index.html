@@ -112,6 +112,37 @@
         </div>
     </section>
 
+    <!-- AI Chatbot -->
+    <div class="chatbot-widget" id="chatbotWidget">
+        <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open Jack Parkes chatbot" aria-expanded="false">
+            <span>💬</span>
+            <span>Chat with Jack Parkes</span>
+        </button>
+
+        <section class="chatbot-panel" id="chatbotPanel" aria-label="Jack Parkes AI chatbot" hidden>
+            <header class="chatbot-header">
+                <div>
+                    <h3>Jack Parkes</h3>
+                    <p>Your AI fitness assistant</p>
+                </div>
+                <button id="chatbotClose" aria-label="Close chatbot">×</button>
+            </header>
+
+            <div class="chatbot-messages" id="chatbotMessages" role="log" aria-live="polite"></div>
+
+            <form class="chatbot-input-row" id="chatbotForm">
+                <input
+                    id="chatbotInput"
+                    type="text"
+                    placeholder="Ask me anything about training, nutrition, booking..."
+                    autocomplete="off"
+                    required
+                >
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -144,4 +175,3 @@
     <script src="js/main.js"></script>
 </body>
 </html>
-

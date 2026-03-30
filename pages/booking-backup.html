@@ -1,1226 +1,502 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Book Your Session - PT PARKES</title>
-
     <link rel="stylesheet" href="../css/style.css">
-
     <link rel="stylesheet" href="../css/booking.css">
-
     <!-- Calendly Widget Styles -->
-
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-
     <!-- Stripe JS -->
-
     <script src="https://js.stripe.com/v3/"></script>
-
     <script src="../js/auth-config.js"></script>
-
     <script>
-
         // Hide login notice if user is already logged in
-
         document.addEventListener('DOMContentLoaded', function() {
-
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
             const loginNotice = document.getElementById('loginNotice');
-
             if (currentUser && loginNotice) {
-
                 loginNotice.style.display = 'none';
-
             }
-
         });
-
     </script>
-
-
 
     <script>
-
         protectPage();
-
     </script>
-
-
 
 <style>
-
 .admin-access-btn {
-
     position: fixed;
-
     bottom: 30px;
-
     right: 30px;
-
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
     color: white;
-
     padding: 15px 25px;
-
     border-radius: 50px;
-
     font-weight: 600;
-
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-
     transition: all 0.3s;
-
     z-index: 1000;
-
     display: flex;
-
     align-items: center;
-
     gap: 8px;
-
     cursor: pointer;
-
     border: none;
-
     font-size: 15px;
-
 }
-
 .admin-access-btn:hover {
-
     transform: translateY(-3px);
-
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-
 }
-
 .admin-dropdown {
-
     position: fixed;
-
     bottom: 90px;
-
     right: 30px;
-
     background: white;
-
     border-radius: 12px;
-
     box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-
     padding: 25px;
-
     width: 300px;
-
     z-index: 999;
-
     display: none;
-
 }
-
 .admin-dropdown.active {
-
     display: block;
-
     animation: slideUp 0.3s ease;
-
 }
-
 @keyframes slideUp {
-
     from {
-
         opacity: 0;
-
         transform: translateY(10px);
-
     }
-
     to {
-
         opacity: 1;
-
         transform: translateY(0);
-
     }
-
 }
-
 .admin-dropdown h3 {
-
     margin: 0 0 15px 0;
-
     color: #333;
-
     font-size: 18px;
-
 }
-
 .admin-dropdown input {
-
     width: 100%;
-
     padding: 10px;
-
     margin-bottom: 12px;
-
     border: 2px solid #e0e0e0;
-
     border-radius: 6px;
-
     font-size: 14px;
-
     box-sizing: border-box;
-
 }
-
 .admin-dropdown input:focus {
-
     outline: none;
-
     border-color: #667eea;
-
 }
-
 .admin-dropdown button {
-
     width: 100%;
-
     padding: 12px;
-
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
     color: white;
-
     border: none;
-
     border-radius: 6px;
-
     font-weight: 600;
-
     cursor: pointer;
-
     font-size: 15px;
-
     transition: all 0.3s;
-
 }
-
 .admin-dropdown button:hover {
-
     transform: translateY(-2px);
-
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-
 }
-
 .admin-error {
-
     color: #e74c3c;
-
     font-size: 13px;
-
     margin-top: 10px;
-
     display: none;
-
 }
-
-
-
-/* User Login Overlay and Dropdown */
-
-.user-login-overlay {
-
-    position: fixed;
-
-    top: 0;
-
-    left: 0;
-
-    width: 100%;
-
-    height: 100%;
-
-    background: rgba(0, 0, 0, 0.5);
-
-    z-index: 1001;
-
-    display: none;
-
-}
-
-
-
-.user-login-overlay.active {
-
-    display: block;
-
-}
-
-
-
-.user-login-dropdown {
-
-    position: fixed;
-
-    top: 50%;
-
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    background: white;
-
-    border-radius: 12px;
-
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-
-    padding: 30px;
-
-    width: 350px;
-
-    z-index: 1002;
-
-    display: none;
-
-}
-
-
-
-.user-login-dropdown.active {
-
-    display: block;
-
-    animation: popIn 0.3s ease;
-
-}
-
-
-
-@keyframes popIn {
-
-    from {
-
-        opacity: 0;
-
-        transform: translate(-50%, -48%);
-
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform: translate(-50%, -50%);
-
-    }
-
-}
-
-
-
-.user-login-dropdown h3 {
-
-    margin: 0 0 20px 0;
-
-    color: #333;
-
-    font-size: 22px;
-
-    text-align: center;
-
-}
-
-
-
-.user-login-dropdown input {
-
-    width: 100%;
-
-    padding: 12px;
-
-    margin-bottom: 15px;
-
-    border: 2px solid #e0e0e0;
-
-    border-radius: 6px;
-
-    font-size: 15px;
-
-    box-sizing: border-box;
-
-}
-
-
-
-.user-login-dropdown input:focus {
-
-    outline: none;
-
-    border-color: #667eea;
-
-}
-
-
-
-.user-login-dropdown button {
-
-    width: 100%;
-
-    padding: 12px;
-
-    margin-bottom: 10px;
-
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
-    color: white;
-
-    border: none;
-
-    border-radius: 6px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    font-size: 15px;
-
-    transition: all 0.3s;
-
-}
-
-
-
-.user-login-dropdown button:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-
-}
-
-
-
-.user-login-dropdown .close-btn {
-
-    background: #e0e0e0;
-
-    color: #666;
-
-}
-
-
-
-.user-login-dropdown .close-btn:hover {
-
-    background: #d0d0d0;
-
-}
-
-
-
-.user-error {
-
-    color: #e74c3c;
-
-    font-size: 13px;
-
-    margin-top: 10px;
-
-    text-align: center;
-
-    display: none;
-
-}
-
 </style>
-
 </head>
-
 <body>
-
     <!-- Admin Panel Access -->
-
-    <button class="admin-access-btn" id="adminBtn" onclick="toggleAdminDropdown()">⚙️ Admin</button>
-
+    <button class="admin-access-btn" id="adminBtn" onclick="toggleAdminDropdown()">âš™ï¸ Admin</button>
     
-
     <!-- Admin Login Dropdown -->
-
     <div class="admin-dropdown" id="adminDropdown">
-
-        <h3>🔒 Admin Login</h3>
-
+        <h3>ðŸ” Admin Login</h3>
         <input type="text" id="adminUsername" placeholder="Username" />
-
         <input type="password" id="adminPassword" placeholder="Password" />
-
         <button onclick="adminLogin()">Login</button>
-
         <div class="admin-error" id="adminError">Invalid credentials</div>
-
     </div>
-
     
-
-
-
-    <!-- User Login Overlay and Dropdown -->
-
-    <div class="user-login-overlay" id="userLoginOverlay" onclick="closeUserLogin()"></div>
-
-    <div class="user-login-dropdown" id="userLoginDropdown">
-
-        <h3>👤 User Login</h3>
-
-        <input type="text" id="userUsername" placeholder="Username" />
-
-        <input type="password" id="userPassword" placeholder="Password" />
-
-        <button onclick="userLogin()">Login</button>
-
-        <button class="close-btn" onclick="closeUserLogin()">Cancel</button>
-
-        <div class="user-error" id="userError">Invalid credentials</div>
-
-    </div>
-
     <!-- Navigation -->
-
     <nav class="navbar">
-
         <div class="nav-container">
-
             <div class="logo">
-
                 <h1>PT PARKES</h1>
-
             </div>
-
             <ul class="nav-menu">
-
                 <li><a href="../index.html">Home</a></li>
-
                 <li><a href="about.html">About</a></li>
-
                 <li><a href="services.html">Services</a></li>
-
                 <li><a href="booking.html" class="active">Book Now</a></li>
-
                 <li><a href="contact.html">Contact</a></li>
-
             </ul>
-
             <div class="hamburger">
-
                 <span></span>
-
                 <span></span>
-
                 <span></span>
-
             </div>
-
         </div>
-
     </nav>
 
-
-
     <!-- Page Header -->
-
     <section class="page-header">
-
         <div class="container">
-
             <h1>Book Your Session</h1>
-
             <p>Choose your service and schedule your appointment</p>
-
             
-
             <!-- Login Required Notice -->
-
             <div id="loginNotice" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-
-                <h3 style="margin: 0 0 10px 0; font-size: 20px;">🔐 Need Booking Access?</h3>
-
+                <h3 style="margin: 0 0 10px 0; font-size: 20px;">ðŸ“§ Need Booking Access?</h3>
                 <p style="margin: 0 0 15px 0; font-size: 16px;">To book a session, you'll need login credentials from Jack.</p>
-
                 <p style="margin: 0; font-size: 14px; opacity: 0.9;"><strong>Email Jack to request your username and password</strong></p>
-
                 <div style="margin-top: 15px;">
-
                     <button onclick="toggleUserLogin()" style="display: inline-block; background: white; color: #667eea; padding: 12px 30px; border-radius: 25px; border: none; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 14px;">Already have credentials? Login Here</button>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
-
 
     <!-- Booking Steps -->
-
     <section class="booking-steps">
-
         <div class="container">
-
             <div class="steps-container">
-
                 <div class="step active" id="step1-indicator">
-
                     <div class="step-number">1</div>
-
                     <div class="step-text">Select Service</div>
-
                 </div>
-
                 <div class="step" id="step2-indicator">
-
                     <div class="step-number">2</div>
-
                     <div class="step-text">Schedule Time</div>
-
                 </div>
-
                 <div class="step" id="step3-indicator">
-
                     <div class="step-number">3</div>
-
                     <div class="step-text">Payment</div>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
-
 
     <!-- Step 1: Service Selection -->
-
     <section class="booking-section" id="step1">
-
         <div class="container">
-
             <h2>Select Your Training Package</h2>
-
             <div class="package-grid">
-
                 <div class="package-card" data-package="single-session" data-price="60">
-
                     <h3>Single Session</h3>
-
                     <div class="package-price">£60</div>
-
                     <p>One-on-one personal training session</p>
-
                     <ul class="package-features">
-
                         <li>60 minutes of training</li>
-
                         <li>Personalized workout plan</li>
-
                         <li>Form correction & guidance</li>
-
                         <li>Progress tracking</li>
-
                         <li>Workout tracking app</li>
-
                     </ul>
-
                     <button class="select-package-btn">Select Package</button>
-
                 </div>
-
-
 
                 <div class="package-card popular" data-package="4-pack" data-price="220">
-
                     <div class="popular-badge">Best Value</div>
-
                     <h3>4-Session Pack</h3>
-
                     <div class="package-price">£220</div>
-
                     <div class="package-savings">1 session per week</div>
-
                     <p>Four one-on-one training sessions for a month</p>
-
                     <ul class="package-features">
-
                         <li>5 x 60-minute sessions</li>
-
                         <li>Custom training program</li>
-
                         <li>Nutrition guidance included</li>
-
                         <li>Phone support</li>
-
                         <li>Workout tracking app</li>
-
                     </ul>
-
                     <button class="select-package-btn">Select Package</button>
-
                 </div>
-
-
 
                 <div class="package-card" data-package="8-pack" data-price="380">
-
                     <h3>8-Session Pack</h3>
-
                     <div class="package-price">£380</div>
-
                     <div class="package-savings">2 sessions per week</div>
-
                     <p>Eight one-on-one training sessions</p>
-
                     <ul class="package-features">
-
                         <li>10 x 60-minute sessions</li>
-
                         <li>Comprehensive program design</li>
-
                         <li>Meal planning assistance</li>
-
                         <li>Priority scheduling</li>
-
                         <li>Workout tracking app</li>
-
                     </ul>
-
                     <button class="select-package-btn">Select Package</button>
-
                 </div>
-
-
 
                 <div class="package-card" data-package="12-pack" data-price="540">
-
                     <h3>12-Session Pack</h3>
-
                     <div class="package-price">£540</div>
-
                     <div class="package-savings">3 sessions per week</div>
-
                     <p>Twelve one-on-one training sessions</p>
-
                     <ul class="package-features">
-
                         <li>12 x 60-minute sessions</li>
-
                         <li>Individual personal training</li>
-
                         <li>Advanced program design</li>
-
                         <li>Full nutritional support</li>
-
                         <li>Workout tracking app</li>
-
                     </ul>
-
                     <button class="select-package-btn">Select Package</button>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
-
-
     <!-- Step 2: Booking Details Form -->
-
     <section class="booking-section hidden" id="step2">
-
         <div class="container">
-
             <h2>Book Your Session</h2>
-
             <div class="selected-package-info" id="selectedPackageInfo"></div>
-
             
-
             <div id="bookingForm">
                 <div class="form-group">
-
-                    <label for="bookingNotes">Additional Notes (optional):</label>
-
-                    <textarea id="bookingNotes" placeholder="Any specific goals or injuries we should know about?"></textarea>
-
-                    <div class="notes-actions">
-                        <button type="button" class="back-btn notes-save-btn" id="saveNotesBtn">Save Notes</button>
-                        <span class="notes-helper-text">Save any goals, injuries, or preferences before moving to payment.</span>
-                    </div>
-
+                    <label for="bookingDate">Preferred Date:</label>
+                    <input type="date" id="bookingDate" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="bookingTime">Preferred Time:</label>
+                    <input type="time" id="bookingTime" required>
+                </div>
 
+                <div class="form-group">
+                    <label for="bookingNotes">Additional Notes (optional):</label>
+                    <textarea id="bookingNotes" placeholder="Any specific goals or injuries we should know about?"></textarea>
+                </div>
 
                 <div id="bookingMessage" class="message"></div>
 
-
-
                 <div class="button-group">
-
                     <button class="back-btn" onclick="goToStep(1)">Back to Packages</button>
-
                     <button class="next-btn" id="confirmBookingBtn" onclick="submitBooking()">Confirm Booking</button>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
-
-
-    <!-- Step 3: Payment -->
-
-    <section class="booking-section hidden payment-step" id="step3">
-
+    <!-- Step 3: Booking Confirmation -->
+    <section class="booking-section hidden" id="step3">
         <div class="container">
-
-            <h2>Complete Your Payment</h2>
-
-            <div class="confirmation-box payment-card">
-
-                <h3>💳 Secure Stripe Checkout</h3>
-
-                <p class="payment-subtitle">You're almost done. Review your details and continue to Stripe to complete payment.</p>
-
-                <div class="payment-trust-row">
-                    <span>🔒 Encrypted checkout</span>
-                    <span>⚡ Instant confirmation</span>
-                    <span>💳 Card payments</span>
-                </div>
-
+            <h2>Booking Confirmed!</h2>
+            <div class="confirmation-box">
+                <h3>âœ“ Your booking has been submitted</h3>
+                <p>You will receive a confirmation email shortly with all the details.</p>
                 <div id="bookingDetails"></div>
-
-                <div class="button-group payment-button-group">
-
-                    <button class="next-btn primary-pay-btn" id="stripePayBtn" onclick="startStripeCheckout()">Pay with Stripe</button>
-
-                    <button class="back-btn payment-secondary-btn" onclick="goToStep(2)">Back</button>
-
-                    <button class="next-btn payment-tertiary-btn" onclick="window.location.href='booking.html'">Book Another Session</button>
-
-                    <button class="back-btn payment-secondary-btn" onclick="window.location.href='../index.html'">Return Home</button>
-
+                <div class="button-group">
+                    <button class="next-btn" onclick="window.location.href='booking.html'">Book Another Session</button>
+                    <button class="back-btn" onclick="window.location.href='../index.html'">Return Home</button>
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
-
 
     <!-- Info Section -->
-
     <section class="info-section">
-
         <div class="container">
-
             <h2>What to Expect</h2>
-
             <div class="info-grid">
-
                 <div class="info-item">
-
-                    <div class="info-icon">✓</div>
-
+                    <div class="info-icon">âœ“</div>
                     <h4>Confirmation Email</h4>
-
                     <p>You'll receive a confirmation email with all session details immediately after booking.</p>
-
                 </div>
-
                 <div class="info-item">
-
-                    <div class="info-icon">✓</div>
-
+                    <div class="info-icon">âœ“</div>
                     <h4>What to Bring</h4>
-
                     <p>Comfortable workout clothes, water bottle, and a positive attitude!</p>
-
                 </div>
-
                 <div class="info-item">
-
-                    <div class="info-icon">✓</div>
-
+                    <div class="info-icon">âœ“</div>
                     <h4>Cancellation Policy</h4>
-
                     <p>Free cancellation up to 24 hours before your scheduled session.</p>
-
                 </div>
-
                 <div class="info-item">
-
-                    <div class="info-icon">✓</div>
-
+                    <div class="info-icon">âœ“</div>
                     <h4>Questions?</h4>
-
                     <p>Contact us anytime at info@ptparks.com or call 07881634160</p>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
-
-
     <!-- Footer -->
-
     <footer class="footer">
-
         <div class="container">
-
             <div class="footer-content">
-
                 <div class="footer-section">
-
                     <h3>PT PARKES</h3>
-
                     <p>Transforming lives through fitness</p>
-
                 </div>
-
                 <div class="footer-section">
-
                     <h4>Quick Links</h4>
-
                     <ul>
-
                         <li><a href="about.html">About</a></li>
-
                         <li><a href="services.html">Services</a></li>
-
                         <li><a href="booking.html">Book Now</a></li>
-
                         <li><a href="contact.html">Contact</a></li>
-
                     </ul>
-
                 </div>
-
                 <div class="footer-section">
-
                     <h4>Contact</h4>
-
                     <p>Email: info@ptparks.com</p>
-
                     <p>Phone: 07881634160</p>
-
                 </div>
-
             </div>
-
             <div class="footer-bottom">
-
                 <p>&copy; 2026 PT PARKES. All rights reserved.</p>
-
             </div>
-
         </div>
-
     </footer>
 
-
-
     <!-- Calendly Widget Script -->
-
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-
     
-
     <script src="../js/main.js"></script>
-
     <script src="../js/booking.js"></script>
-
+    <script src="../js/booking-api.js"></script>
 </body>
-
 </html>
 
 
 
-
-
-
-
 <script>
-
 // Admin dropdown functionality
-
 function toggleAdminDropdown() {
-
     const dropdown = document.getElementById('adminDropdown');
-
     const isActive = dropdown.classList.contains('active');
-
     
-
     if (isActive) {
-
         dropdown.classList.remove('active');
-
     } else {
-
         dropdown.classList.add('active');
-
         document.getElementById('adminUsername').focus();
-
     }
-
 }
-
-
 
 // Admin login
-
 function adminLogin() {
-
     const username = document.getElementById('adminUsername').value.trim();
-
     const password = document.getElementById('adminPassword').value;
-
     const errorDiv = document.getElementById('adminError');
-
     
-
     errorDiv.style.display = 'none';
-
     
-
     // Get users from localStorage
-
     const usersStr = localStorage.getItem('users');
-
     
-
     if (!usersStr) {
-
         errorDiv.textContent = 'No users found.';
-
         errorDiv.style.display = 'block';
-
         return;
-
     }
-
     
-
     const users = JSON.parse(usersStr);
-
     const user = users.find(u => u.username === username && u.role === 'admin');
-
     
-
     if (!user || user.password !== password) {
-
         errorDiv.textContent = 'Invalid admin credentials';
-
         errorDiv.style.display = 'block';
-
         return;
-
     }
-
     
-
     // Create auth token
-
     const token = btoa(user.id + ':' + Date.now());
-
     localStorage.setItem('authToken', token);
-
     localStorage.setItem('currentUser', JSON.stringify({
-
         id: user.id,
-
         username: user.username,
-
         email: user.email,
-
         role: user.role
-
     }));
-
     
-
     // Redirect to admin panel
-
     window.location.href = 'admin-panel.html';
-
 }
-
-
-
-
 
 
 
 // Fix passwords function
-
 function fixPasswords() {
-
     const debugDiv = document.getElementById('debugInfo');
-
     const errorDiv = document.getElementById('adminError');
-
     
-
     // Get existing users
-
     const usersStr = localStorage.getItem('users');
-
     let users = usersStr ? JSON.parse(usersStr) : [];
-
     
-
     // Update passwords for existing users
-
     users.forEach(user => {
-
         if (user.username === 'admin') {
-
             user.password = 'admin123';
-
         } else if (user.username === 'john_doe') {
-
             user.password = 'password123';
-
         } else if (user.username === 'jane_smith') {
-
             user.password = 'password123';
-
         } else if (!user.password) {
-
             // For any user without password, set default
-
             user.password = 'password123';
-
         }
-
     });
-
     
-
     // Save back to localStorage
-
     localStorage.setItem('users', JSON.stringify(users));
-
     
-
     // Show success message
-
-    let info = '✅ PASSWORDS FIXED!\n\n';
-
+    let info = 'âœ… PASSWORDS FIXED!\n\n';
     info += 'Updated users:\n\n';
-
     users.forEach((u, i) => {
-
         info += 'User ' + (i+1) + ':\n';
-
         info += '  Username: ' + u.username + '\n';
-
         info += '  Password: ' + u.password + '\n';
-
         info += '  Role: ' + u.role + '\n\n';
-
     });
-
     info += 'Now try logging in with:\n';
-
     info += 'Username: admin\n';
-
     info += 'Password: admin123';
-
     
-
     debugDiv.innerHTML = '<pre style="margin:0; white-space: pre-wrap; color: green;">' + info + '</pre>';
-
     debugDiv.style.display = 'block';
-
     
-
-    errorDiv.textContent = '✅ Passwords fixed! Try logging in now.';
-
+    errorDiv.textContent = 'âœ… Passwords fixed! Try logging in now.';
     errorDiv.style.display = 'block';
-
     errorDiv.style.color = '#28a745';
-
 }
 
-
-
 // Close dropdown when clicking outside
-
 document.addEventListener('click', function(e) {
-
     const dropdown = document.getElementById('adminDropdown');
-
     const btn = document.getElementById('adminBtn');
-
     
-
     if (dropdown && btn && !dropdown.contains(e.target) && !btn.contains(e.target)) {
-
         dropdown.classList.remove('active');
-
     }
-
 });
-
-
 
 // Enter key to submit
-
 document.addEventListener('DOMContentLoaded', function() {
-
     const adminPassword = document.getElementById('adminPassword');
-
     if (adminPassword) {
-
         adminPassword.addEventListener('keypress', function(e) {
-
             if (e.key === 'Enter') {
-
                 adminLogin();
-
             }
-
         });
-
     }
-
 });
-
 </script>
-

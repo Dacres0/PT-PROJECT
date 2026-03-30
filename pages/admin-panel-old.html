@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - PT PARKES</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar nav ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar nav ul li a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar nav ul li a:hover,
+        .sidebar nav ul li a.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            width: calc(100% - 250px);
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .admin-header h1 {
+            margin: 0;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .users-table thead {
+            background: #333;
+            color: white;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .users-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .users-table .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .users-table .btn-small {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .users-table {
+                font-size: 12px;
+            }
+
+            .users-table th,
+            .users-table td {
+                padding: 10px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Admin Panel</h2>
+            <nav>
+                <ul>
+                    <li><a class="nav-link active" data-section="create-user">Create User</a></li>
+                    <li><a class="nav-link" data-section="manage-users">Manage Users</a></li>
+                    <li><a class="nav-link" data-section="view-bookings">View Bookings</a></li>
+                </ul>
+            </nav>
+            <button class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="admin-header">
+                <h1>Admin Panel</h1>
+                <p>Welcome, <span id="adminName">Jack</span>! Manage users and bookings here.</p>
+            </div>
+
+            <!-- Create User Section -->
+            <section id="create-user" class="section active">
+                <h2>Create New User</h2>
+                
+                <div id="createMsg" class="message"></div>
+
+                <div class="form-section">
+                    <form id="createUserForm">
+                        <div class="form-group">
+                            <label for="newUsername">Username</label>
+                            <input type="text" id="newUsername" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newEmail">Email</label>
+                            <input type="email" id="newEmail" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newPassword">Password</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+
+                        <button type="submit" class="btn">Create User</button>
+                    </form>
+
+                    <div class="loading" id="createLoading">
+                        <div class="spinner"></div>
+                        <p>Creating user...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Manage Users Section -->
+            <section id="manage-users" class="section">
+                <h2>Manage Users</h2>
+                
+                <div class="loading" id="usersLoading" style="display: block;">
+                    <div class="spinner"></div>
+                    <p>Loading users...</p>
+                </div>
+
+                <div id="usersContainer">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- View Bookings Section -->
+            <section id="view-bookings" class="section">
+                <h2>All Bookings</h2>
+                
+                <div class="loading" id="bookingsLoading" style="display: block;">
+                    <div class="spinner"></div>
+                    <p>Loading bookings...</p>
+                </div>
+
+                <div id="bookingsContainer">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div id="resetModal" class="modal">
+        <div class="modal-content">
+            <h3>Reset User Password</h3>
+            <div class="form-group">
+                <label for="resetPassword">New Password</label>
+                <input type="password" id="resetPassword" required>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="submitResetPassword()">Reset</button>
+                <button class="btn btn-danger" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        let currentToken = localStorage.getItem('authToken');
+        let currentUser = JSON.parse(localStorage.getItem('user'));
+        let selectedUserId = null;
+
+        // Check authentication
+        if (!currentToken || !currentUser.isAdmin) {
+            window.location.href = 'booking.html';
+        }
+
+        // Set admin name
+        document.getElementById('adminName').textContent = currentUser.username;
+
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = e.target.dataset.section;
+                
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                
+                document.getElementById(section).classList.add('active');
+                e.target.classList.add('active');
+
+                // Load data if needed
+                if (section === 'manage-users') {
+                    loadUsers();
+                } else if (section === 'view-bookings') {
+                    loadBookings();
+                }
+            });
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            window.location.href = 'booking.html';
+        });
+
+        // Create User Form
+        document.getElementById('createUserForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('newUsername').value;
+            const email = document.getElementById('newEmail').value;
+            const password = document.getElementById('newPassword').value;
+
+            const createMsg = document.getElementById('createMsg');
+            const createLoading = document.getElementById('createLoading');
+
+            createMsg.style.display = 'none';
+            createLoading.style.display = 'block';
+
+            try {
+                const response = await fetch(`${API_URL}/admin/create-user`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentToken}`
+                    },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to create user');
+                }
+
+                showMessage(createMsg, `User '${username}' created successfully!`, 'success');
+                document.getElementById('createUserForm').reset();
+
+            } catch (error) {
+                showMessage(createMsg, error.message, 'error');
+            } finally {
+                createLoading.style.display = 'none';
+            }
+        });
+
+        // Load Users
+        async function loadUsers() {
+            const usersLoading = document.getElementById('usersLoading');
+            const usersTableBody = document.getElementById('usersTableBody');
+
+            usersLoading.style.display = 'block';
+
+            try {
+                const response = await fetch(`${API_URL}/admin/users`, {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to load users');
+
+                const users = await response.json();
+                usersTableBody.innerHTML = '';
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.isAdmin ? 'Admin' : 'User'}</td>
+                        <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                        <td class="action-btns">
+                            <button class="btn btn-small" onclick="openResetModal('${user.id}')">Reset Password</button>
+                            <button class="btn btn-small btn-danger" onclick="deleteUser('${user.id}', '${user.username}')">Delete</button>
+                        </td>
+                    `;
+                    usersTableBody.appendChild(row);
+                });
+
+            } catch (error) {
+                usersTableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: red;">${error.message}</td></tr>`;
+            } finally {
+                usersLoading.style.display = 'none';
+            }
+        }
+
+        // Load Bookings
+        async function loadBookings() {
+            const bookingsLoading = document.getElementById('bookingsLoading');
+            const bookingsTableBody = document.getElementById('bookingsTableBody');
+
+            bookingsLoading.style.display = 'block';
+
+            try {
+                const response = await fetch(`${API_URL}/admin/bookings`, {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to load bookings');
+
+                const bookings = await response.json();
+                bookingsTableBody.innerHTML = '';
+
+                bookings.forEach(booking => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${booking.username}</td>
+                        <td>${booking.service}</td>
+                        <td>${booking.date}</td>
+                        <td>${booking.time}</td>
+                        <td><span style="background: ${booking.status === 'pending' ? '#ffc107' : '#28a745'}; color: white; padding: 3px 8px; border-radius: 3px;">${booking.status}</span></td>
+                        <td>${new Date(booking.createdAt).toLocaleDateString()}</td>
+                    `;
+                    bookingsTableBody.appendChild(row);
+                });
+
+            } catch (error) {
+                bookingsTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">${error.message}</td></tr>`;
+            } finally {
+                bookingsLoading.style.display = 'none';
+            }
+        }
+
+        // Reset Password Modal
+        function openResetModal(userId) {
+            selectedUserId = userId;
+            document.getElementById('resetModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('resetModal').classList.remove('active');
+            document.getElementById('resetPassword').value = '';
+            selectedUserId = null;
+        }
+
+        async function submitResetPassword() {
+            const newPassword = document.getElementById('resetPassword').value;
+
+            if (!newPassword) {
+                alert('Please enter a new password');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/admin/users/${selectedUserId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${currentToken}`
+                    },
+                    body: JSON.stringify({ password: newPassword })
+                });
+
+                if (!response.ok) throw new Error('Failed to reset password');
+
+                alert('Password reset successfully!');
+                closeModal();
+                loadUsers();
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        // Delete User
+        async function deleteUser(userId, username) {
+            if (!confirm(`Are you sure you want to delete user '${username}'?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/admin/users/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to delete user');
+
+                alert('User deleted successfully!');
+                loadUsers();
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        // Show Message
+        function showMessage(element, message, type) {
+            element.textContent = message;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+        }
+
+        // Close modal on outside click
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('resetModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
